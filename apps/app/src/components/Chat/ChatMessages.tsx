@@ -3,78 +3,60 @@ import { useChat } from '../../context/ChatContext';
 import Omco from '../../images/omco.jpeg';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-const mockMessages = [
-  {
-    role: 'user',
-    content: 'Želim kupiti dionice BH Telecoma, koja je trenutna cijena?',
-    timestamp: new Date(),
-    userImage: Omco,
-  },
-  {
-    role: 'assistant',
-    content:
-      'Trenutna cijena dionice BH Telecoma (BHTSR) na Sarajevskoj berzi je 12.80 KM. U posljednjih mjesec dana, cijena se kretala između 12.50 KM i 13.20 KM. Da li želite da vam pomognem oko procesa kupovine?',
-    timestamp: new Date(),
-  },
-  {
-    role: 'user',
-    content: 'Da, želim kupiti 100 dionica. Koji je proces?',
-    timestamp: new Date(),
-    userImage: Omco,
-  },
-  {
-    role: 'assistant',
-    content:
-      'Za kupovinu 100 dionica BH Telecoma, proces je sljedeći:\n\n1. Potrebno je da otvorite račun kod brokerske kuće\n2. Položite novac na račun (približno 1,280 KM za dionice + provizija)\n3. Postavite nalog za kupovinu\n\nŽelite li da vam pomognem oko odabira brokerske kuće?',
-    timestamp: new Date(),
-  },
-  {
-    role: 'user',
-    content: 'Da, koje brokerske kuće preporučujete?',
-    timestamp: new Date(),
-    userImage: Omco,
-  },
-  {
-    role: 'assistant',
-    content:
-      'Nekoliko pouzdanih brokerskih kuća u BiH su:\n\n1. Raiffeisen Bank - jedna od najvećih i najstabilnijih\n2. SEE Investment Solutions - specijalizirani za trgovanje na domaćem tržištu\n3. Eurohaus - dugogodišnje iskustvo na tržištu kapitala\n\nPreporučujem Raiffeisen zbog:\n- Najniže provizije (0.5%)\n- Online trading platforme\n- Jednostavnog otvaranja računa\n\nŽelite li detaljnije informacije o nekoj od ovih kuća?',
-    timestamp: new Date(),
-  },
-  {
-    role: 'user',
-    content: 'Može za Raiffeisen, kako da otvorim račun kod njih?',
-    timestamp: new Date(),
-    userImage: Omco,
-  },
-  {
-    role: 'assistant',
-    content:
-      'Za otvaranje brokerskog računa u Raiffeisen banci potrebno je:\n\n1. Lična dokumenta (lična karta ili pasoš)\n2. Tekući račun (može se otvoriti u isto vrijeme ako ga nemate)\n3. Popuniti obrazac za otvaranje brokerskog računa\n\nMožete to uraditi na dva načina:\n1. Online kroz Raiffeisen Internet bankarstvo\n2. Lično u najbližoj poslovnici\n\nNakon otvaranja računa, dobićete pristup njihovoj trading platformi. Želite li da vam objasnim kako da postavite prvi nalog za kupovinu?',
-    timestamp: new Date(),
-  },
-  {
-    role: 'user',
-    content: 'Da, kako da postavim nalog za kupovinu?',
-    timestamp: new Date(),
-    userImage: Omco,
-  },
-  {
-    role: 'assistant',
-    content:
-      'Evo koraka za postavljanje naloga za kupovinu:\n\n1. Prijavite se na Raiffeisen trading platformu\n2. Odaberite simbol BHTSR (BH Telecom)\n3. Kliknite na "Nova kupovina"\n4. Unesite:\n   - Količinu: 100 dionica\n   - Cijenu: možete staviti trenutnu tržišnu (12.80 KM) ili limit cijenu\n   - Tip naloga: "Market" za trenutnu cijenu ili "Limit" za određenu cijenu\n5. Potvrdite nalog\n\nNalog će biti aktivan do izvršenja ili isteka (standardno 30 dana). Želite li da vam objasnim različite tipove naloga?',
-    timestamp: new Date(),
-  },
-];
+import Image from 'next/image';
+
+interface AIMessageProps {
+  content: string;
+  isLoading: boolean;
+  isLastUserMessage: boolean;
+}
+
+const AIMessage = ({
+  content,
+  isLoading,
+  isLastUserMessage,
+}: AIMessageProps) => (
+  <div className={isLastUserMessage ? 'ml-10' : ''}>
+    <div className="text-sm text-[#5661F6] flex items-center gap-1 pb-1 font-light">
+      SASE A.I +
+      <div className="border border-[#5661F6] w-3 flex items-center justify-center h-3 rounded-full">
+        <span
+          style={{ fontSize: 8 }}
+          className="material-icons-outlined rotate-[-125deg] text-[#5661F6]"
+        >
+          west
+        </span>
+      </div>
+    </div>
+
+    {isLoading ? (
+      <div className="flex items-center gap-2 text-sm text-gray-500 pt-2">
+        <div className="animate-pulse flex space-x-1">
+          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+        </div>
+      </div>
+    ) : (
+      <div className="text-sm text-gray-600 whitespace-pre-line">
+        <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+      </div>
+    )}
+  </div>
+);
 
 function ChatMessages() {
-  const { activeChat, messages } = useChat();
+  const { messages, isLoading } = useChat();
 
   return (
     <div className="h-[94%] max-w-[80%] m-auto py-8  pb-0">
       <div className="h-full overflow-scroll">
         {messages.map((message, index) => {
           const isUser = message.role === 'user';
-          const isFollowedByAI = mockMessages[index + 1]?.role === 'assistant';
+          const isFollowedByAI = messages[index + 1]?.role === 'assistant';
+          const isLastUserMessage = index === messages.length - 1 && isUser;
+          const hasAIResponse =
+            !isLastUserMessage || (isUser && isFollowedByAI);
 
           return (
             <div
@@ -93,15 +75,15 @@ function ChatMessages() {
               >
                 {isUser ? (
                   <div className="flex gap-4 items-center group">
-                    <img
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      //@ts-ignore
-                      src={message?.userImage?.src}
+                    <Image
+                      width={128}
+                      height={128}
+                      src={Omco}
                       alt="User"
                       className="w-6 h-6 rounded-full"
                     />
                     <div className="flex justify-between items-center w-full">
-                      <p className="text-xs text-gray-600 group-hover:underline">
+                      <p className="text-sm text-gray-600 group-hover:underline">
                         {message.content}
                       </p>
                       <div className="flex items-center gap-1 group-hover:flex hidden">
@@ -115,33 +97,26 @@ function ChatMessages() {
                     </div>
                   </div>
                 ) : (
-                  <div className="">
-                    <div className="text-xs text-[#5661F6] flex items-center gap-1 pb-1 font-light">
-                      SASE A.I +
-                      <div className="border border-[#5661F6] w-3 flex items-center justify-center h-3 rounded-full">
-                        <span
-                          style={{ fontSize: 8 }}
-                          className="material-icons-outlined  rotate-[-125deg] text-[#5661F6]"
-                        >
-                          west
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-gray-600 whitespace-pre-line">
-                      <ReactMarkdown
-                        children={message.content}
-                        remarkPlugins={[remarkGfm]}
-                      />
-                    </p>
-                  </div>
+                  <AIMessage
+                    content={message.content}
+                    isLoading={false}
+                    isLastUserMessage={isLastUserMessage}
+                  />
                 )}
               </div>
 
+              {isLastUserMessage && isLoading && (
+                <AIMessage
+                  content=""
+                  isLoading={true}
+                  isLastUserMessage={isLastUserMessage}
+                />
+              )}
+
               <div
                 className={
-                  !isFollowedByAI
-                    ? 'flex ml-10  pb-4 items-center justify-between'
+                  hasAIResponse && !isFollowedByAI
+                    ? 'flex ml-10 pb-4 items-center justify-between'
                     : 'hidden'
                 }
               >

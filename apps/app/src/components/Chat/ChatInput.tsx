@@ -6,10 +6,21 @@ import Image from 'next/image';
 function ChatInput() {
   const { sendMessage, isLoading } = useChat();
   const [message, setMessage] = useState('');
+
   const submit = () => {
-    sendMessage(message);
-    setMessage('');
+    if (message.trim()) {
+      sendMessage(message);
+      setMessage('');
+    }
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submit();
+    }
+  };
+
   return (
     <div className="absolute left-0 right-0 bottom-4 flex items-center justify-center">
       <div
@@ -19,6 +30,7 @@ function ChatInput() {
         <input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
           type="text"
           disabled={isLoading}
           placeholder="Šta želiš danas kupiti?"
@@ -26,13 +38,15 @@ function ChatInput() {
         />
 
         <div
-          className="h-[80%] group aspect-square bg-[#5661F6] rounded-full flex items-center cursor-pointer justify-center"
+          className={`h-[80%] group aspect-square ${
+            message.trim() ? 'bg-[#5661F6]' : 'bg-gray-200'
+          } rounded-full flex items-center cursor-pointer justify-center`}
           onClick={submit}
         >
           <Image
             src={sendIcon}
             alt="send"
-            className="w-[50%] -ml-0.5 -mb-0.5 group-hover:scale-110 transition-all duration-300 group-hover:opacity-90 group-acitve:scale-120 "
+            className="w-[50%] -ml-0.5 -mb-0.5 group-hover:scale-110 transition-all duration-300 group-hover:opacity-90 group-acitve:scale-120"
             width={128}
             height={128}
           />
