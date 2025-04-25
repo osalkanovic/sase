@@ -1,6 +1,7 @@
 'use client';
 import { useChat } from '../../context/ChatContext';
-
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 const mockMessages = [
   {
     role: 'user',
@@ -29,12 +30,12 @@ const mockMessages = [
 ];
 
 function ChatMessages() {
-  const { activeChat } = useChat();
+  const { activeChat, messages } = useChat();
 
   return (
     <div className="h-[94%] max-w-[80%] m-auto py-8">
       <div className="h-full overflow-scroll">
-        {mockMessages.map((message, index) => {
+        {messages.map((message, index) => {
           const isUser = message.role === 'user';
           const isFollowedByAI = mockMessages[index + 1]?.role === 'assistant';
 
@@ -77,8 +78,12 @@ function ChatMessages() {
                       </span>
                     </div>
                   </p>
+
                   <p className="text-xs text-gray-600 whitespace-pre-line">
-                    {message.content}
+                    <ReactMarkdown
+                      children={message.content}
+                      remarkPlugins={[remarkGfm]}
+                    />
                   </p>
                 </div>
               )}
