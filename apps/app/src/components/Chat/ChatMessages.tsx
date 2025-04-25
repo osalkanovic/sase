@@ -49,7 +49,8 @@ function ChatMessages() {
   const { messages, isLoading } = useChat();
 
   return (
-    <div className="h-[94%] max-w-[80%] m-auto py-8  pb-0">
+    <div className="h-[99%] max-w-[80%]  m-auto py-8 relative ">
+      <div className="absolute bottom-0 left-0 right-0 bottom-0 bg-gradient-to-t from-[#F3F7FB] via-[#F3F7FB] to-transparent pointer-events-none w-full h-[80px]"></div>
       <div className="h-full overflow-scroll">
         {messages.map((message, index) => {
           const isUser = message.role === 'user';
@@ -63,7 +64,7 @@ function ChatMessages() {
               key={index + 'chatmessage'}
               className={
                 !isFollowedByAI
-                  ? 'border-b border-gray-200 last:border-b-0  mb-4'
+                  ? 'border-b border-gray-200 last:border-b-0  mb-4 last:mb-10 '
                   : ''
               }
             >
