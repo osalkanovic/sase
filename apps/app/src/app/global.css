@@ -58,3 +58,8 @@ pre {
   overflow: scroll;
   padding: 0.5rem 0.75rem;
 }
+
+div::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}
