@@ -1,0 +1,83 @@
+{
+  "NewDataSet": {
+    "Table1": [
+      {
+        "Figure": {
+          "_text": "Return on Equity (ROE)"
+        },
+        "g2023": {
+          "_text": "0.4124"
+        },
+        "g2024": {
+          "_text": "0.5532"
+        }
+      },
+      {
+        "Figure": {
+          "_text": "Earnings per share"
+        },
+        "g2023": {
+          "_text": "0.0177"
+        },
+        "g2024": {
+          "_text": "0.0242"
+        }
+      },
+      {
+        "Figure": {
+          "_text": "Book value per share"
+        },
+        "g2023": {
+          "_text": "4.2890"
+        },
+        "g2024": {
+          "_text": "4.3660"
+        }
+      },
+      {
+        "Figure": {
+          "_text": "Price / Earnings"
+        },
+        "g2023": {
+          "_text": "163.9493"
+        },
+        "g2024": {
+          "_text": "120.0634"
+        }
+      },
+      {
+        "Figure": {
+          "_text": "P/B"
+        },
+        "g2023": {
+          "_text": "0.6762"
+        },
+        "g2024": {
+          "_text": "0.6642"
+        }
+      },
+      {
+        "Figure": {
+          "_text": "Neto dobit perioda (KM)"
+        },
+        "g2023": {
+          "_text": "312336"
+        },
+        "g2024": {
+          "_text": "426502"
+        }
+      },
+      {
+        "Figure": {
+          "_text": "Neto gubitak perioda (KM)"
+        },
+        "g2023": {
+          "_text": "0"
+        },
+        "g2024": {
+          "_text": "0"
+        }
+      }
+    ]
+  }
+}
