@@ -24,7 +24,7 @@ function ChatInput() {
   return (
     <div
       className={`absolute transition-all duration-300 left-0 right-0  ${
-        messages.length === 0 ? 'bottom-[50%]' : 'bottom-4'
+        messages.length === 0 ? 'bottom-[42%]' : 'bottom-4'
       } flex flex-col items-center justify-center`}
     >
       {messages.length === 0 && (
@@ -50,7 +50,7 @@ function ChatInput() {
             type="text"
             disabled={isLoading}
             placeholder="Šta želiš danas kupiti?"
-            className={`w-full bg-transparent ${
+            className={`w-full transition-all duration-300 bg-transparent ${
               messages.length === 0 ? 'translate-y-1 ml-1' : 'h-[38.4px]'
             } outline-none text-sm placeholder:text-gray-400 text-gray-600 px-4`}
           />
