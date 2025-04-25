@@ -1,5 +1,5 @@
 import ChatInput from './ChatInput';
-
+import ChatMessages from './ChatMessages';
 function ChatWrapper() {
   return (
     <div className=" mr-6 h-full relative">
@@ -9,6 +9,7 @@ function ChatWrapper() {
           <span className="text-sm text-white">Upgrade to Pro</span>
         </div>
       </div>
+      <ChatMessages />
       <ChatInput />
     </div>
   );
