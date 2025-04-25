@@ -21,7 +21,7 @@ export function ChatSidebarTop({ onNewChat, onClearAll }: ChatSidebarTopProps) {
           >
             add
           </span>
-          New chat
+          Novi razgovor
         </button>
 
         <div className="h-10 min-w-10 w-10 bg-black flex items-center justify-center rounded-full cursor-pointer hover:opacity-90 active:opacity-80 user-select-none">
