@@ -1,7 +1,15 @@
+import { useState } from 'react';
+import { useChat } from '../../context/ChatContext';
 import sendIcon from '../../images/send.png';
 import Image from 'next/image';
 
 function ChatInput() {
+  const { sendMessage, isLoading } = useChat();
+  const [message, setMessage] = useState('');
+  const submit = () => {
+    sendMessage(message);
+    setMessage('');
+  };
   return (
     <div className="absolute left-0 right-0 bottom-4 flex items-center justify-center">
       <div
@@ -9,12 +17,18 @@ function ChatInput() {
         style={{ boxShadow: '1px 1px 6px 0px #52525224' }}
       >
         <input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           type="text"
+          disabled={isLoading}
           placeholder="Šta želiš danas kupiti?"
           className="w-full h-full outline-none bg-transparent text-sm placeholder:text-gray-400 text-gray-600 px-4"
         />
 
-        <div className="h-[80%] group aspect-square bg-[#5661F6] rounded-full flex items-center cursor-pointer justify-center">
+        <div
+          className="h-[80%] group aspect-square bg-[#5661F6] rounded-full flex items-center cursor-pointer justify-center"
+          onClick={submit}
+        >
           <Image
             src={sendIcon}
             alt="send"

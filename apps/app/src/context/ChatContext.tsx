@@ -1,6 +1,6 @@
 'use client';
-import React, { createContext, useContext, useState } from 'react';
-
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 interface Chat {
   id: string;
   title: string;
@@ -11,14 +11,24 @@ interface Chat {
   }>;
 }
 
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+  userImage: string;
+}
+
 interface ChatContextType {
   chats: Chat[];
+  isLoading: boolean;
   activeChat: string | null;
   setActiveChat: (id: string) => void;
   addChat: () => void;
   deleteAllChats: () => void;
   deleteChat: (id: string) => void;
   updateChatTitle: (id: string, title: string) => void;
+  sendMessage: (message: string) => void;
+  messages: Message[];
   addMessage: (
     chatId: string,
     content: string,
@@ -73,6 +83,8 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [chats, setChats] = useState<Chat[]>(initialChats);
+  const [isLoading, setIsLoading] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [activeChat, setActiveChat] = useState<string | null>(
     initialChats[0]?.id || null
   );
@@ -101,6 +113,39 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
   const updateChatTitle = (id: string, title: string) => {
     setChats(chats.map((chat) => (chat.id === id ? { ...chat, title } : chat)));
+  };
+
+  useEffect(() => {
+    setIsLoading(false);
+    setMessages([]);
+  }, [activeChat]);
+
+  const sendMessage = async (message: string) => {
+    setMessages((messages) => [
+      ...messages,
+      {
+        role: 'user',
+        content: message,
+        timestamp: new Date(),
+        userImage: 'https://github.com/edisdev.png',
+      },
+    ]);
+    setIsLoading(true);
+    const res = await axios.post('http://localhost:3001/api/chat', {
+      chatId: activeChat,
+      message: message,
+    });
+    setMessages((messages) => [
+      ...messages,
+      {
+        role: 'assistant',
+        content: res.data.output,
+        timestamp: new Date(),
+        userImage: '',
+      },
+    ]);
+    setIsLoading(false);
+    console.log(res);
   };
 
   const addMessage = (
@@ -134,6 +179,9 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         deleteChat,
         updateChatTitle,
         addMessage,
+        sendMessage,
+        messages,
+        isLoading,
       }}
     >
       {children}

@@ -1,7 +1,8 @@
 'use client';
 import { useChat } from '../../context/ChatContext';
 import Omco from '../../images/omco.jpeg';
-
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 const mockMessages = [
   {
     role: 'user',
@@ -66,12 +67,12 @@ const mockMessages = [
 ];
 
 function ChatMessages() {
-  const { activeChat } = useChat();
+  const { activeChat, messages } = useChat();
 
   return (
     <div className="h-[94%] max-w-[80%] m-auto py-8  pb-0">
       <div className="h-full overflow-scroll">
-        {mockMessages.map((message, index) => {
+        {messages.map((message, index) => {
           const isUser = message.role === 'user';
           const isFollowedByAI = mockMessages[index + 1]?.role === 'assistant';
 
@@ -93,6 +94,8 @@ function ChatMessages() {
                 {isUser ? (
                   <div className="flex gap-4 items-center group">
                     <img
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      //@ts-ignore
                       src={message?.userImage?.src}
                       alt="User"
                       className="w-6 h-6 rounded-full"
@@ -124,8 +127,12 @@ function ChatMessages() {
                         </span>
                       </div>
                     </div>
+
                     <p className="text-xs text-gray-600 whitespace-pre-line">
-                      {message.content}
+                      <ReactMarkdown
+                        children={message.content}
+                        remarkPlugins={[remarkGfm]}
+                      />
                     </p>
                   </div>
                 )}
