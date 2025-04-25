@@ -3,21 +3,33 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "api:dev": "nx run api:serve",
+    "setup": " cd apps/api && npx ts-node -r tsconfig-paths/register src/setup.ts",
     "dev:app": "nx serve app",
     "build:app": "nx build app",
     "start:app": "nx serve app --prod"
   },
   "private": true,
   "dependencies": {
+    "@langchain/community": "^0.3.41",
+    "@langchain/core": "^0.3.48",
+    "@langchain/langgraph": "^0.2.67",
+    "@langchain/openai": "^0.5.7",
     "@nestjs/common": "^10.0.2",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
+    "axios": "^1.9.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "langchain": "^0.3.24",
     "axios": "^1.6.0",
     "next": "~15.2.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0"
+    "rxjs": "^7.8.0",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
@@ -39,6 +51,8 @@
     "@swc/cli": "~0.6.0",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
     "@types/node": "~18.16.9",
     "@types/react": "18.3.1",
     "@types/react-dom": "18.3.0",
