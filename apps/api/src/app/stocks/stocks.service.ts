@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SaseApiService } from '../sase-api/sase-api.service';
 import { ResendService } from '../resend/resend.service';
+import { AppConfigService } from '../config/config.service';
 
 @Injectable()
 export class StockService {
@@ -8,7 +9,8 @@ export class StockService {
   private userStocks = new Map();
   constructor(
     private readonly saseApiService: SaseApiService,
-    private readonly resendService: ResendService
+    private readonly resendService: ResendService,
+    private readonly appConfigService: AppConfigService
   ) {
     this.userStocks.set('BHTSR', 200);
   }
@@ -53,9 +55,13 @@ export class StockService {
       const currentPrice = await this.saseApiService.getStockPrice(stock);
       const value = Number(currentPrice) * userAmount;
       if (userAmount > 0) {
+        const stockName = this.appConfigService.companies.find(
+          (c) => c.symbol === stock
+        );
         stocks = {
           ...stocks,
           [stock]: {
+            name: stockName.name,
             amount: userAmount,
             value: `${value} KM`,
             currentPrice: `${currentPrice} KM`,
