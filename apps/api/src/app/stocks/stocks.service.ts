@@ -32,7 +32,7 @@ export class StockService {
       `Novi nalog za kupovinu`,
       `<div>
       <p>Akcija: Kupovina</p>
-      <p>Kupac: Omer Salkanovic</p>
+      <p>Korisnik: Omer Salkanovic</p>
       <p>Simbol: ${symbol}</p>
       <p>Količina: ${amount}</p> 
       <p>Cijena: ${price} KM</p> 
@@ -85,7 +85,7 @@ export class StockService {
       `Novi nalog za prodaju`,
       `<div>
       <p>Akcija: Prodaja</p>
-      <p>Kupac: Omer Salkanovic</p>
+      <p>Korisnik: Omer Salkanovic</p>
       <p>Simbol: ${symbol}</p>
       <p>Količina: ${amount}</p> 
       <p>Cijena: ${price} KM</p> 
