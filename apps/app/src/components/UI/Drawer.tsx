@@ -18,8 +18,10 @@ function Drawer({
   return (
     <>
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[3px] z-40 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        className={`fixed inset-0 bg-black bg-opacity-50  z-40 transition-all duration-300 ease-in-out ${
+          isOpen
+            ? 'opacity-100 visible backdrop-blur-[3px]'
+            : 'opacity-0 invisible delay-100 backdrop-blur-[0px]'
         }`}
         onClick={onClose}
       />

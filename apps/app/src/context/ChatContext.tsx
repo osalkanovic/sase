@@ -24,6 +24,7 @@ interface ChatContextType {
   isLoading: boolean;
   activeChat: string | null;
   setActiveChat: (id: string) => void;
+  isChatLoading: boolean;
   addChat: () => void;
   deleteAllChats: () => void;
   deleteChat: (id: string) => void;
@@ -39,35 +40,9 @@ interface ChatContextType {
 
 const initialChats: Chat[] = [
   'Kupovina dionica BH Telecoma',
-  'Interes za nekretnine u Sarajevu',
-  'Upit za kupovinu poljoprivrednog zemljišta',
-  'Tražim investiciju u IT sektor',
-  'Kupovina komercijalnih prostora',
-  'Interes za hotel u Mostaru',
-  'Upit za kupovinu rudarskih prava',
-  'Tražim investiciju u obnovljive izvore',
-  'Kupovina dionica Energoinvesta',
-  'Interes za trgovačke centre',
-  'Upit za kupovinu šumskog zemljišta',
-  'Tražim investiciju u turizam',
-  'Kupovina dionica Raiffeisen Banke',
-  'Interes za industrijske hale',
-  'Upit za kupovinu poljoprivredne opreme',
-  'Tražim investiciju u proizvodnju',
-  'Kupovina dionica ASA Osiguranja',
-  'Interes za apartmane na moru',
-  'Upit za kupovinu vinograda',
-  'Tražim investiciju u edukaciju',
-  'Kupovina dionica Uniqa osiguranja',
-  'Interes za poslovne zgrade',
-  'Upit za kupovinu poljoprivrednih proizvoda',
-  'Tražim investiciju u zdravstvo',
-  'Kupovina dionica Sparkasse Banke',
-  'Interes za turističke komplekse',
-  'Upit za kupovinu poljoprivrednih strojeva',
-  'Tražim investiciju u transport',
-  'Kupovina dionica ASA Preventa',
-  'Interes za stambene zgrade',
+  'Kupovina dionica Bosnalijeka',
+
+  'Financijski izvještaji BH Telecoma',
 ].map((title, index) => ({
   id: (Date.now() - index * 1000).toString(), // Ensuring unique IDs
   title,
@@ -85,6 +60,7 @@ const ChatContext = createContext<ChatContextType | undefined>(undefined);
 export function ChatProvider({ children }: { children: React.ReactNode }) {
   const [chats, setChats] = useState<Chat[]>(initialChats);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChatLoading, setIsChatLoading] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [activeChat, setActiveChat] = useState<string | null>(
     initialChats[0]?.id || null
@@ -138,6 +114,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   }, [activeChat]);
 
   const getChatMessages = async () => {
+    setIsChatLoading(true);
     const res = await axios.get(
       `http://localhost:3001/api/chat/history/${activeChat}`
     );
@@ -151,6 +128,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         .reverse()
     );
     console.log(res.data, 'chat history');
+    setIsChatLoading(false);
   };
 
   const sendMessage = async (message: string) => {
@@ -164,6 +142,17 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       },
     ]);
     setIsLoading(true);
+
+    // AUTOMATSKI UPDATE NASLOVA
+    const chat = chats.find((c) => c.id === activeChat);
+    if (chat && chat.messages.length === 0 && activeChat) {
+      const shortTitle = message.split(' ').slice(0, 8).join(' ');
+      updateChatTitle(
+        activeChat,
+        shortTitle.length > 40 ? shortTitle.slice(0, 40) + '...' : shortTitle
+      );
+    }
+
     const res = await axios.post('http://localhost:3001/api/chat', {
       chatId: activeChat,
       message: message,
@@ -213,6 +202,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
         updateChatTitle,
         addMessage,
         sendMessage,
+        isChatLoading,
         messages,
         isLoading,
       }}

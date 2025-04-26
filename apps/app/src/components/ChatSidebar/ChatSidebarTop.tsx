@@ -1,9 +1,14 @@
 interface ChatSidebarTopProps {
   onNewChat: () => void;
   onClearAll: () => void;
+  numberOfConversations: number;
 }
 
-export function ChatSidebarTop({ onNewChat, onClearAll }: ChatSidebarTopProps) {
+export function ChatSidebarTop({
+  onNewChat,
+  onClearAll,
+  numberOfConversations,
+}: ChatSidebarTopProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="pt-6 pl-6 pr-6">
@@ -35,14 +40,19 @@ export function ChatSidebarTop({ onNewChat, onClearAll }: ChatSidebarTopProps) {
       </div>
 
       <div className="border-t border-b border-gray-200 w-full py-4 px-6 flex items-center justify-between">
-        <p className="text-xs text-gray-400">Your conversations</p>
-
-        <p
-          onClick={onClearAll}
-          className="text-xs  text-[#5661F6] cursor-pointer hover:opacity-90 active:opacity-80"
-        >
-          Clear all
+        <p className="text-xs text-gray-400">
+          Your conversations{' '}
+          <span className="text-gray-600">({numberOfConversations})</span>
         </p>
+
+        {numberOfConversations > 0 && (
+          <p
+            onClick={onClearAll}
+            className="text-xs  text-[#5661F6] cursor-pointer hover:opacity-90 active:opacity-80"
+          >
+            Clear all
+          </p>
+        )}
       </div>
     </div>
   );
