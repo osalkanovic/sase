@@ -9,4 +9,9 @@ export class StocksController {
   async getUserBalance() {
     return this.stocksService.getUserBalance();
   }
+
+  @Get('/history')
+  async getHistory() {
+    return this.stocksService.history;
+  }
 }

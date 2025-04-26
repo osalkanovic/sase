@@ -7,6 +7,7 @@ import { AppConfigService } from '../config/config.service';
 export class StockService {
   private userBalance = 1000;
   private userStocks = new Map();
+  public history = [];
   constructor(
     private readonly saseApiService: SaseApiService,
     private readonly resendService: ResendService,
@@ -41,6 +42,7 @@ export class StockService {
 
       </div>`
     );
+    this.history.push({ action: 'buy', symbol, price, amount });
     return {
       success: false,
       reason: 'The order has been successfully forwarded to the broker.',
@@ -98,6 +100,8 @@ export class StockService {
 
       </div>`
     );
+
+    this.history.push({ action: 'sell', symbol, price, amount });
 
     return {
       success: false,

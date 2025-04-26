@@ -6,6 +6,7 @@ import { AppConfigService } from '../../config/config.service';
 
 import { LangchainToolProvider } from '../../langchain/langchain-tool.provider';
 import { AssistantUtils } from '../../utils/assistant.utils';
+import { OpenaiService } from '../../openai/openai.service';
 
 @Injectable()
 export class ChatService {
@@ -15,7 +16,8 @@ export class ChatService {
   >();
   constructor(
     private readonly appConfigService: AppConfigService,
-    private readonly langchainToolProvider: LangchainToolProvider
+    private readonly langchainToolProvider: LangchainToolProvider,
+    private readonly openaiService: OpenaiService
   ) {}
 
   async sendMessage(data: SendMessageDto) {
@@ -96,6 +98,19 @@ export class ChatService {
     this.chats.set(chatId, { ...this.chats.get(chatId), ...data });
 
     return this.chats.get(chatId);
+  }
+
+  async getChatHistory(chatId: string) {
+    const chat = this.getChat(chatId);
+    if (!chat.mainAssistantThreadId) return [];
+    const messages = await this.openaiService.openai.beta.threads.messages.list(
+      chat.mainAssistantThreadId
+    );
+    messages.data.forEach((m) => {
+      console.log(m.content[0]);
+    });
+
+    return messages.data;
   }
 
   async zeroShotTest(data: SendMessageDto) {
