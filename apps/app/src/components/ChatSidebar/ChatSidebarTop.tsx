@@ -7,7 +7,7 @@ export function ChatSidebarTop({ onNewChat, onClearAll }: ChatSidebarTopProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="pt-6 pl-6 pr-6">
-        <p className="text-[24px] font-[500] tracking-[5px]">SASE A.I +</p>
+        <p className="text-[24px] font-[500] tracking-[5px]">SASE A.I</p>
       </div>
 
       <div className="px-6 flex items-center gap-2 pt-6">
