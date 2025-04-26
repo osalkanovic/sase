@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { SaseApiService } from '../sase-api/sase-api.service';
+import { ResendService } from '../resend/resend.service';
+import { AppConfigService } from '../config/config.service';
 
 @Injectable()
 export class StockService {
   private userBalance = 1000;
   private userStocks = new Map();
-  constructor(private readonly saseApiService: SaseApiService) {
+  constructor(
+    private readonly saseApiService: SaseApiService,
+    private readonly resendService: ResendService,
+    private readonly appConfigService: AppConfigService
+  ) {
     this.userStocks.set('BHTSR', 200);
   }
 
@@ -24,8 +30,17 @@ export class StockService {
       (this.userStocks.get(symbol) ? Number(this.userStocks.get(symbol)) : 0) +
         amount
     );
-    //TODO: send email
+    this.resendService.sendMail(
+      `Novi nalog za kupovinu`,
+      `<div>
+      <p>Akcija: Kupovina</p>
+      <p>Korisnik: Omer Salkanovic</p>
+      <p>Simbol: ${symbol}</p>
+      <p>Količina: ${amount}</p> 
+      <p>Cijena: ${price} KM</p> 
 
+      </div>`
+    );
     return {
       success: false,
       reason: 'The order has been successfully forwarded to the broker.',
@@ -40,9 +55,13 @@ export class StockService {
       const currentPrice = await this.saseApiService.getStockPrice(stock);
       const value = Number(currentPrice) * userAmount;
       if (userAmount > 0) {
+        const stockName = this.appConfigService.companies.find(
+          (c) => c.symbol === stock
+        );
         stocks = {
           ...stocks,
           [stock]: {
+            name: stockName.name,
             amount: userAmount,
             value: `${value} KM`,
             currentPrice: `${currentPrice} KM`,
@@ -68,5 +87,21 @@ export class StockService {
     }
     this.userBalance += totalPrice;
     this.userStocks.set(symbol, Number(this.userStocks.get(symbol)) - amount);
+    this.resendService.sendMail(
+      `Novi nalog za prodaju`,
+      `<div>
+      <p>Akcija: Prodaja</p>
+      <p>Korisnik: Omer Salkanovic</p>
+      <p>Simbol: ${symbol}</p>
+      <p>Količina: ${amount}</p> 
+      <p>Cijena: ${price} KM</p> 
+
+      </div>`
+    );
+
+    return {
+      success: false,
+      reason: 'The order has been successfully forwarded to the broker.',
+    };
   }
 }

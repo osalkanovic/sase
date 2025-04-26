@@ -54,4 +54,8 @@ export class AppConfigService {
   get mainAssistant() {
     return this.configService.get('ASSISTANT_MAIN');
   }
+
+  get resendApiKey() {
+    return this.configService.get('RESEND_API_KEY');
+  }
 }

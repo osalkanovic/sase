@@ -8,6 +8,7 @@ import { OpenaiModule } from './openai/openai.module';
 import { ChatModule } from './agent/chat/chat.module';
 import { LangchainModule } from './langchain/langchain.module';
 import { StocksModule } from './stocks/stocks.module';
+import { ResendModule } from './resend/resend.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +20,7 @@ import { StocksModule } from './stocks/stocks.module';
     ChatModule,
     LangchainModule,
     StocksModule,
+    ResendModule,
   ],
   controllers: [AppController],
   providers: [AppService],

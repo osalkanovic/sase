@@ -118,7 +118,15 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setIsLoading(false);
-    setMessages([]);
+    setMessages([
+      // {
+      //   role: 'assistant',
+      //   timestamp: new Date(),
+      //   userImage: '',
+      //   content:
+      //     '```chart {"fromDate": "28.10.2024", "toDate": "26.04.2025", "ticker": "ENISR"}```',
+      // },
+    ]);
   }, [activeChat]);
 
   const sendMessage = async (message: string) => {
