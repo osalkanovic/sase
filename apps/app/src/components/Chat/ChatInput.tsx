@@ -104,7 +104,7 @@ function ChatInput() {
                   className={`max-h-[80%] px-2 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
                   onClick={() =>
                     sendMessage(
-                      'Daj mi pregled performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvjestaje i chartove'
+                      'Daj mi pregled performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, financijske izvjestaje i grafikone'
                     )
                   }
                 >
