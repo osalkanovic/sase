@@ -118,6 +118,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setIsLoading(false);
+    getChatMessages();
     setMessages([
       // {
       //   role: 'assistant',
@@ -135,6 +136,22 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       // },
     ]);
   }, [activeChat]);
+
+  const getChatMessages = async () => {
+    const res = await axios.get(
+      `http://localhost:3001/api/chat/history/${activeChat}`
+    );
+    setMessages(
+      res.data
+        .map((message: any) => ({
+          role: message.role,
+          content: message.content[0].text.value,
+          timestamp: new Date(),
+        }))
+        .reverse()
+    );
+    console.log(res.data, 'chat history');
+  };
 
   const sendMessage = async (message: string) => {
     setMessages((messages) => [
