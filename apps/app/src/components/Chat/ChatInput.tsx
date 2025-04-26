@@ -23,8 +23,8 @@ function ChatInput() {
 
   return (
     <div
-      className={`absolute transition-all duration-300 left-0 right-0  ${
-        messages.length === 0 ? 'bottom-[42%]' : 'bottom-4'
+      className={`absolute transition-all duration-300 z-20 left-0 right-0  ${
+        messages.length === 0 ? 'top-0 bottom-0' : 'bottom-4'
       } flex flex-col items-center justify-center`}
     >
       {messages.length === 0 && (
@@ -81,7 +81,7 @@ function ChatInput() {
               <div className="flex items-center gap-2">
                 <div
                   className={`max-h-[80%] px-2 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
-                  onClick={() => alert('Predefinisana poruka 1')}
+                  onClick={() => sendMessage('Koliko para imam u portfelju?')}
                 >
                   <div className="hover:opacity-80 active:opacity-80 transition-all duration-300 flex items-center justify-center">
                     <span
@@ -96,19 +96,21 @@ function ChatInput() {
 
                 <div
                   className={`max-h-[80%] px-2 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
-                  onClick={() => alert('Predefinisana poruka 1')}
+                  onClick={() =>
+                    sendMessage(
+                      'Daj mi pregled performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvjestaje i chartove'
+                    )
+                  }
                 >
                   <div className="hover:opacity-80 active:opacity-80 transition-all duration-300 flex items-center justify-center">
                     <span
                       className="material-icons-round text-gray-500 "
                       style={{ fontSize: 14 }}
                     >
-                      shopping_cart
+                      search
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">
-                    Sta se isplati kupiti?
-                  </p>
+                  <p className="text-xs text-gray-500">Pregled berze</p>
                 </div>
               </div>
               <div className="flex  justify-end items-end pb-1">

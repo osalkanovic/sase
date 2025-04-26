@@ -7,6 +7,6 @@ export class StocksController {
 
   @Get('/user-balance')
   async getUserBalance() {
-    return this.stocksService.getUserBalance();
+    return this.stocksService.getUserBalanceWithAdditionalInfo();
   }
 }

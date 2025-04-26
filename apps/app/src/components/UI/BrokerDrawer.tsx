@@ -32,7 +32,7 @@ function BrokerDrawer() {
         onClose={() => setIsDrawerOpen(false)}
         title="Portfolio"
       >
-        <BrokerAccount />
+        <BrokerAccount isDrawerOpen={isDrawerOpen} />
       </Drawer>
     </div>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import { useChat } from '../../context/ChatContext';
 import Omco from '../../images/omco.jpeg';
@@ -20,7 +21,6 @@ function CustomCodeBlock({ children, className }: any) {
     return <Chart data={JSON.parse(data)} />;
   }
 
-  // fallback na običan code blok ako ne počinje sa 'char '
   return (
     <pre className={className}>
       <code>{content}</code>
@@ -35,7 +35,7 @@ const AIMessage = ({
 }: AIMessageProps) => (
   <div className={isLastUserMessage ? 'ml-10' : ''}>
     <div className="text-sm text-[#5661F6] flex items-center gap-1 pb-1 font-light">
-      SASE A.I
+      SASE AI
       <div className="border border-[#5661F6] w-3 flex items-center justify-center h-3 rounded-full">
         <span
           style={{ fontSize: 8 }}
@@ -55,10 +55,22 @@ const AIMessage = ({
         </div>
       </div>
     ) : (
-      <div className="text-sm text-gray-600 whitespace-pre-line">
+      <div className="text-sm text-gray-600 whitespace-normal">
         <ReactMarkdown
           components={{
             code: CustomCodeBlock,
+            h3: ({ node, ...props }) => (
+              <h3
+                {...props}
+                className="text-lg font-bold my-4 text-[#5661F6]"
+              />
+            ),
+            ul: ({ node, ...props }) => (
+              <ul {...props} className="list-disc pl-5 my-4 space-y-4" />
+            ),
+            li: ({ node, ...props }) => (
+              <li {...props} className="my-0 py-0 leading-tight" />
+            ),
           }}
           children={content}
           remarkPlugins={[remarkGfm]}
@@ -73,7 +85,7 @@ function ChatMessages() {
 
   return (
     <div className="h-[99%] max-w-[80%]  m-auto py-8 relative ">
-      <div className="absolute bottom-0 left-0 right-0 bottom-0 bg-gradient-to-t from-[#F3F7FB] via-[#F3F7FB] to-transparent pointer-events-none w-full h-[80px]"></div>
+      <div className="absolute bottom-0 z-10 left-0 right-0 bottom-0 bg-gradient-to-t from-[#F3F7FB] via-[#F3F7FB] to-transparent pointer-events-none w-full h-[80px]"></div>
       <div className="h-full overflow-scroll">
         {messages.map((message, index) => {
           const isUser = message.role === 'user';

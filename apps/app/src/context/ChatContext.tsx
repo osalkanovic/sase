@@ -126,6 +126,13 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       //   content:
       //     '```chart {"fromDate": "28.10.2024", "toDate": "26.04.2025", "ticker": "ENISR"}```',
       // },
+      // {
+      //   role: 'assistant',
+      //   timestamp: new Date(),
+      //   userImage: '',
+      //   content:
+      //     'Evo pregleda performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući financijske izvještaje:\n\n### BH Telecom (BHTSR)\n- **Prihodi iz ugovora s kupcima**: \n  - Trenutna godina: 528,325,078 KM\n  - Prethodna godina: 505,223,267 KM\n- **Dobit iz redovnog poslovanja**:\n  - Trenutna godina: 65,842,371 KM\n  - Prethodna godina: 48,003,561 KM\n- **Ukupni rezultat**:\n  - Trenutna godina: 62,790,293 KM\n  - Prethodna godina: 46,551,759 KM\n- **Osnovna zarada po dionici**:\n  - Trenutna godina: 1.04 KM\n  - Prethodna godina: 0.76 KM\n\n### Bosnalijek (BSNLR)\n- **Dobit iz redovnog poslovanja**: \n  - Trenutna godina: 14,194,979 KM\n  - Prethodna godina: 11,505,114 KM\n- **Ukupni prihodi**:\n  - Trenutna godina: 186,631,422 KM\n  - Prethodna godina: 187,310,908 KM\n- **Poslovni rashodi**:\n  - Trenutna godina: 153,023,471 KM\n  - Prethodna godina: 143,027,999 KM\n\n### Energoinvest d.d. Sarajevo (ENISR)\n- **Prihodi iz ugovora s kupcima**: \n  - Trenutna godina: 178,161,512 KM\n  - Prethodna godina: 194,799,315 KM\n- **Neto dobit**:\n  - Trenutna godina: 47,997,117 KM\n  - Prethodna godina: 46,623,706 KM\n- **Ukupni rezultat**:\n  - Trenutna godina: 624,942 KM\n  - Prethodna godina: 633,552 KM\n\n### Chartovi\nZa vizualni prikaz performansi, evo grafikona za svaku kompaniju u zadnjih 30 dana:\n\n- BH Telecom: ```chart {"fromDate": "27.03.2025", "toDate": "26.04.2025", "ticker": "BHTSR"}```\n- Bosnalijek: ```chart {"fromDate": "27.03.2025", "toDate": "26.04.2025", "ticker": "BSNLR"}```\n- Energoinvest: ```chart {"fromDate": "27.03.2025", "toDate": "26.04.2025", "ticker": "ENISR"}```\n\nAko trebate dodatne informacije ili specifične izračune, slobodno mi se obratite!',
+      // },
     ]);
   }, [activeChat]);
 

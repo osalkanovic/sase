@@ -1,31 +1,38 @@
-const stocks = [
-  {
-    name: 'BH Telecom',
-    symbol: 'BHTSR',
-    amount: 200,
-    value: '300 KM',
-  },
-  {
-    name: 'Sarajevo Osiguranje',
-    symbol: 'SOSOR',
-    amount: 150,
-    value: '450 KM',
-  },
-  {
-    name: 'Bosnalijek',
-    symbol: 'BSNLR',
-    amount: 80,
-    value: '720 KM',
-  },
-  {
-    name: 'Energoinvest',
-    symbol: 'ENISR',
-    amount: 50,
-    value: '110 KM',
-  },
-];
+'use client';
+import axios from 'axios';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
-function BrokerAccount() {
+function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
+  const [data, setData] = useState({
+    userBalance: '0',
+    stocks: {},
+  });
+
+  const getData = async () => {
+    const res = await axios.get(
+      'http://localhost:3001/api/stocks/user-balance'
+    );
+
+    setData(res.data);
+  };
+
+  const formatCurrency = (value: string | number) => {
+    const num =
+      typeof value === 'string'
+        ? parseFloat(value.replace(/[^0-9.,-]/g, '').replace(',', '.'))
+        : value;
+    // Ručno formatiranje: 1.234,56 KM
+    return `${num.toLocaleString('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })} KM`;
+  };
+
+  useEffect(() => {
+    getData();
+  }, [isDrawerOpen]);
+
   return (
     <div className="h-full">
       <div className="flex flex-col">
@@ -33,7 +40,9 @@ function BrokerAccount() {
           <p className="text-base tracking-[1px] text-gray-400 font-[300]">
             Balans
           </p>
-          <p className="text-2xl font-[600] text-gray-800">3000 KM</p>
+          <p className="text-2xl font-[600] text-gray-800">
+            {formatCurrency(data.userBalance)}
+          </p>
         </div>
 
         <div className="w-[90%] mx-auto h-[1px] mt-4 mb-4 bg-gray-200"></div>
@@ -58,7 +67,10 @@ function BrokerAccount() {
           </div>
 
           <div className="w-[2px] h-[20px] bg-gray-200" />
-          <div className="flex items-center justify-center gap-2 group cursor-pointer">
+          <div
+            onClick={() => getData()}
+            className="flex items-center justify-center gap-2 group cursor-pointer"
+          >
             <p className="text-gray-500 text-sm group-hover:text-blue-500">
               Osjveži
             </p>
@@ -72,31 +84,62 @@ function BrokerAccount() {
           <p className="text-base tracking-[1px] text-gray-400 font-[300]">
             Lista dionica
           </p>
-          <div className="flex flex-col w-full gap-0 mt-2 bg-gray-100 p-2 rounded-lg   border border-gray-200">
-            {stocks.map((stock, idx) => (
-              <div
-                className={`flex items-center justify-between ${
-                  idx !== 0 ? 'mt-2' : ''
-                }`}
-                key={stock.symbol}
-              >
-                <div className="flex items-center justify-center gap-2">
-                  <p className="text-blue-500 font-[500] text-sm min-w-[130px]">
-                    {stock.name}
-                  </p>
-                  <div className="w-[2px] h-[20px] bg-gray-200" />
-                  <p className="text-gray-500 text-xs min-w-[40px] text-start">
-                    {stock.symbol}
-                  </p>
-                  <div className="w-[2px] h-[20px] bg-gray-200" />
-                  <p className="text-gray-500 text-xs min-w-[70px] text-start">
-                    {stock.amount} Dionica
-                  </p>
-                  <div className="w-[2px] h-[20px] bg-gray-200" />
-                  <p className="text-gray-500 text-xs">{stock.value}</p>
+          <div className="flex flex-col w-full gap-2 mt-4 max-w-[90%] overflow-auto">
+            {Object.keys(data.stocks).map((stock, idx) => {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-ignore
+              const stockData = data.stocks[stock];
+
+              return (
+                <div
+                  className={`flex items-center justify-between`}
+                  key={stock}
+                >
+                  <div className="flex relative items-center border border-gray-100 bg-gray-50 flex-col rounded-lg p-2 w-full  justify-center gap-4">
+                    {/* <p className="text-gray-500 text-sm"> {stockData.name}</p> */}
+                    <Image
+                      src={stockData.logo}
+                      alt={stockData.name}
+                      className="h-14 object-contain pt-1 pb-2"
+                      width={100}
+                      height={100}
+                    />
+
+                    <div className="flex gap-1 w-full justify-between px-4">
+                      <div className="flex flex-col items-center w-1/3 gap-1">
+                        <p className="text-xs text-gray-400">Simbol</p>
+                        <p className="text-gray-600 text-base">{stock}</p>
+                      </div>
+
+                      <div className="flex flex-col items-center w-1/3 gap-1">
+                        <p className="text-xs text-gray-400">Količina</p>
+                        <p className="text-gray-600 text-lg">
+                          {stockData.amount}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col items-center w-1/3 gap-1">
+                        <p className="text-xs text-gray-400">Vrijednost</p>
+                        <p className="text-gray-600 text-base">
+                          {stockData.value}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* {stockData.name}
+                    {stock}
+                    {stockData.amount}
+                    {stockData.value} */}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+
+            {Object.keys(data.stocks).length === 0 && (
+              <p className="text-gray-500 text-sm text-center py-4">
+                Nemate dionice u portfelju
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export class AppConfigService {
       },
       {
         symbol: 'ENISR',
-        name: 'Energoinvest d.d. Sarajevo',
+        name: 'Energoinvest',
         logo: 'https://www.sase.ba/v1/DesktopModules/CorpData/images/ENIS.jpg',
       },
       // {

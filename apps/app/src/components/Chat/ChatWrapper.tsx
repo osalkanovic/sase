@@ -1,3 +1,4 @@
+'use client';
 import BrokerDrawer from '../UI/BrokerDrawer';
 import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages';

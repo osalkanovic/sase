@@ -75,6 +75,34 @@ export class StockService {
     };
   }
 
+  async getUserBalanceWithAdditionalInfo() {
+    let stocks = {};
+    const rawStocks = Object.fromEntries(this.userStocks);
+    for (const stock of Object.keys(rawStocks)) {
+      const userAmount = rawStocks[stock];
+      const currentPrice = await this.saseApiService.getStockPrice(stock);
+      const value = Number(currentPrice) * userAmount;
+      if (userAmount > 0) {
+        const stockData = this.appConfigService.companies.find(
+          (c) => c.symbol === stock
+        );
+        stocks = {
+          ...stocks,
+          [stock]: {
+            ...stockData,
+            amount: userAmount,
+            value: `${value} KM`,
+            currentPrice: `${currentPrice} KM`,
+          },
+        };
+      }
+    }
+    return {
+      userBalance: `${this.userBalance} KM`,
+      stocks,
+    };
+  }
+
   sellStock(symbol: string, price: number, amount: number) {
     const totalPrice = Number(price) * Number(amount);
     if (amount > this.userStocks.get(symbol)) {

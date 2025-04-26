@@ -5,7 +5,7 @@
   "scripts": {
     "api:dev": "nx run api:serve",
     "setup": " cd apps/api && npx ts-node -r tsconfig-paths/register src/setup.ts",
-    "dev:app": "nx serve app",
+    "app:dev": "nx serve app",
     "build:app": "nx build app",
     "start:app": "nx serve app --prod"
   },
