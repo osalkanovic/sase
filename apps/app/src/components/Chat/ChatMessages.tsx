@@ -65,12 +65,17 @@ const AIMessage = ({
                 className="text-lg font-bold my-4 text-[#5661F6]"
               />
             ),
-            a: ({ node, ...props }) => <a {...props} className="underline" />,
+            a: ({ node, ...props }) => (
+              <a {...props} className="underline text-blue-600" />
+            ),
             ul: ({ node, ...props }) => (
-              <ul {...props} className="list-disc pl-5 my-4 space-y-4" />
+              <ul {...props} className="list-disc pl-5 my-4 space-y-2" />
             ),
             li: ({ node, ...props }) => (
               <li {...props} className="my-0 py-0 leading-tight" />
+            ),
+            ol: ({ node, ...props }) => (
+              <ol {...props} className="list-decimal pl-5 my-4 space-y-1" />
             ),
           }}
           children={content}
@@ -97,7 +102,7 @@ function ChatMessages() {
 
           return (
             <div
-              key={index + 'chatmessage'}
+              key={message.content}
               className={
                 !isFollowedByAI
                   ? 'border-b border-gray-200 last:border-b-0  mb-4 last:mb-10 '
@@ -105,7 +110,6 @@ function ChatMessages() {
               }
             >
               <div
-                key={index}
                 className={`b ${!isUser && 'ml-10'} ${
                   isFollowedByAI ? 'mb-2' : 'mb-4'
                 }`}

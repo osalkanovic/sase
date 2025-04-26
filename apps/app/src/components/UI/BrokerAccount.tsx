@@ -122,28 +122,25 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
                     <div className="flex gap-1 w-full justify-between px-4">
                       <div className="flex flex-col items-center w-1/3 gap-1">
                         <p className="text-xs text-gray-400">Simbol</p>
-                        <p className="text-gray-600 text-base">{stock}</p>
+                        <p className="text-gray-600 text-base text-center">
+                          {stock}
+                        </p>
                       </div>
 
-                      <div className="flex flex-col items-center w-1/3 gap-1">
+                      <div className="flex flex-col justify-center items-center w-1/3 gap-1">
                         <p className="text-xs text-gray-400">Količina</p>
-                        <p className="text-gray-600 text-lg">
+                        <p className="text-gray-600 text-center text-lg">
                           {stockData.amount}
                         </p>
                       </div>
 
                       <div className="flex flex-col items-center w-1/3 gap-1">
                         <p className="text-xs text-gray-400">Vrijednost</p>
-                        <p className="text-gray-600 text-base">
+                        <p className="text-gray-600 text-center text-base">
                           {formatCurrency(stockData.value)}
                         </p>
                       </div>
                     </div>
-
-                    {/* {stockData.name}
-                    {stock}
-                    {stockData.amount}
-                    {stockData.value} */}
                   </div>
                 </div>
               );

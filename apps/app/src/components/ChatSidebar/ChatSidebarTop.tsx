@@ -50,7 +50,7 @@ export function ChatSidebarTop({
             onClick={onClearAll}
             className="text-xs  text-[#5661F6] cursor-pointer hover:opacity-90 active:opacity-80"
           >
-            Clear all
+            Obriši sve
           </p>
         )}
       </div>

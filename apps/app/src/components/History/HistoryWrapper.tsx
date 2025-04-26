@@ -60,9 +60,9 @@ function HistoryWrapper() {
 
   return (
     <div className="p-4 bg-[#F3F7FB] h-screen">
-      <div className="overflow-x-auto mx-auto mt-10 bg-white border border-gray-100 rounded-lg max-w-[1000px]">
+      <div className="overflow-x-auto max-h-[85vh] mx-auto mt-10 bg-white border border-gray-100 rounded-lg max-w-[1000px]">
         <table className="min-w-full divide-y divide-gray-100">
-          <thead className="bg-white">
+          <thead className="bg-white sticky top-0 ">
             <tr>
               <th
                 scope="col"
@@ -141,8 +141,773 @@ function HistoryWrapper() {
                 </td>
               </tr>
             ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
+
+            {sortedData.map((item, index) => (
+              <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {format(new Date(item.date), 'dd.MM.yyyy HH:mm', {
+                    locale: bs,
+                  })}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-400">
+                  {item.symbol}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      item.action === 'buy'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {item.action === 'buy' ? 'KUPOVINA' : 'PRODAJA'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.price.toFixed(2)} KM
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {item.amount}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                  {(item.price * item.amount).toFixed(2)} KM
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
+
+        {sortedData.length < 1 && (
+          <div className="px-6 text-center py-8 border-t border-gray-100 whitespace-nowrap text-sm text-gray-400">
+            Nema podataka
+          </div>
+        )}
       </div>
     </div>
   );
