@@ -4,11 +4,28 @@ import Omco from '../../images/omco.jpeg';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
+import { Chart } from './Chart';
 
 interface AIMessageProps {
   content: string;
   isLoading: boolean;
   isLastUserMessage: boolean;
+}
+
+function CustomCodeBlock({ children, className }: any) {
+  const content = String(children).trim();
+
+  if (content.startsWith('chart ')) {
+    const data = content.replace('chart ', '');
+    return <Chart data={JSON.parse(data)} />;
+  }
+
+  // fallback na običan code blok ako ne počinje sa 'char '
+  return (
+    <pre className={className}>
+      <code>{content}</code>
+    </pre>
+  );
 }
 
 const AIMessage = ({
@@ -39,7 +56,13 @@ const AIMessage = ({
       </div>
     ) : (
       <div className="text-sm text-gray-600 whitespace-pre-line">
-        <ReactMarkdown children={content} remarkPlugins={[remarkGfm]} />
+        <ReactMarkdown
+          components={{
+            code: CustomCodeBlock,
+          }}
+          children={content}
+          remarkPlugins={[remarkGfm]}
+        />
       </div>
     )}
   </div>

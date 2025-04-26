@@ -34,7 +34,8 @@ async function bootstrap() {
       name: `SASE ${company.name} Assistant`,
       instructions: `You assist users with information from the SASE stock exchange for the company: ${company.name} - ${company.symbol}. Use defined functions for that. When a user asks for a price recommendation, perform a mathematical operation using the code_interpreter to calculate the average price over the last 30 days and, depending on indicators, suggest a price. 
     This is required so that a chart can be displayed to the user on the frontend.
-    The financial reports are in the files. For mathematical operations  use code interpreter.  Currency is KM. Always return plain text answers. Do not use LaTeX, Markdown math formatting (like [ ], text{}, or times), or any special formatting for numbers or equations. Write all calculations in simple, human-readable text format. If you receive question about other company, ignore it`,
+    For price recommendation use the code_interpreter to calculate the exact dates — do not rely on memory for the dates.
+    The financial reports are in the files. For mathematical operations  use code interpreter.  Currency is KM. Always return plain text answers. Do not use LaTeX, Markdown math formatting (like [ ], text{}, or times), or any special formatting for numbers or equations. Write all calculations in simple, human-readable text format. If you receive question about other company, ignore it.`,
       tools: [
         { type: 'file_search' },
         { type: 'code_interpreter' },
