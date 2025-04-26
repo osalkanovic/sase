@@ -35,7 +35,7 @@ const AIMessage = ({
 }: AIMessageProps) => (
   <div className={isLastUserMessage ? 'ml-10' : ''}>
     <div className="text-sm text-[#5661F6] flex items-center gap-1 pb-1 font-light">
-      SASE A.I +
+      SASE A.I
       <div className="border border-[#5661F6] w-3 flex items-center justify-center h-3 rounded-full">
         <span
           style={{ fontSize: 8 }}
