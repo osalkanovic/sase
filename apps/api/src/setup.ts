@@ -7,6 +7,7 @@ import { ReportsUtils } from './app/utils/reports.utils';
 import { formatToOpenAIFunction } from 'langchain/tools';
 import { LangchainToolProvider } from './app/langchain/langchain-tool.provider';
 import { AssistantUtils } from './app/utils/assistant.utils';
+import { getStockNews } from './app/agent/tools/get-news';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const appConfig = app.get(AppConfigService);
@@ -18,6 +19,8 @@ async function bootstrap() {
   const getUserBalance = langchainToolProvider.getUserBalance();
   const sellStock = langchainToolProvider.getSellStockTool();
   const callAssistnat = langchainToolProvider.getCallAssistant();
+  const newsTool = langchainToolProvider.getNews();
+
   const assistants = {};
   const getCurrentStockPriceTool =
     langchainToolProvider.getCurrentStockPriceTool();
@@ -77,14 +80,18 @@ async function bootstrap() {
           You MUST consider any question related to company financials, such as revenue, cost, sales, or profits, as a request for financial reports and call the corresponding assistant.
           If the user asks for a price recommendation (e.g., "Koju cijenu predlažeš", "Predloži cijenu", "Preporuka za kupovnu cijenu", etc.), you MUST call the relevant assistant based on the company.
           Call it whenever you don't know question, this assistants will help you.
-
           If user wants to see chart, return message in this format:
           \`\`\`chart {"fromDate": "20.01.2024", "toDate": "25.01.2024", "ticker": "BHTSR"}\`\`\`. Chart can be named as grafikon or graficki prikaz and etc. Use the code_interpreter to calculate the exact dates — do not rely on memory for the dates. 
           
           If user wants to buy stocks and if you dont have information about quantity ask for that information.
           You have ability to buy and sell stocks for user. 
           If you don't have company name inside question, try to guess based on the previous messages.
-          Once you receive the responses from the agents, format the result from JSON into readable text.`,
+          Don't read user balance from chat history. Each time you MUST call function get_user_balance to get new user balanace.
+          Once you receive the responses from the agents, format the result from JSON into readable text.
+          
+          When a user asks how global events have impacted a company's stock, your task is to gather the relevant news and, for the specified date range, call the relevant assistant to retrieve the stock prices (eg: "Koliko su iznosile cijene dionica od 2025.04.04 do 2025.03.01"). This will allow you to calculate and determine how the news affected the company's performance. In your response compare stock price with news. Return message in markdown format with links about that news.
+          YOUR RESPONSE MUST BE ON USER LANGUAGE. IF QUESTION IS ON BOSNIAN, YOUR RESPONSE MUST BE ON BOSNIAN
+          `,
     tools: [
       { type: 'code_interpreter' },
       {
@@ -102,6 +109,10 @@ async function bootstrap() {
       {
         type: 'function',
         function: formatToOpenAIFunction(callAssistnat, { strict: true }),
+      },
+      {
+        type: 'function',
+        function: formatToOpenAIFunction(newsTool),
       },
     ],
   });

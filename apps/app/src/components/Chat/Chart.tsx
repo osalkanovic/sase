@@ -2,7 +2,14 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { addDays, parseISO, formatISO } from 'date-fns';
-
+function generateRandomHexColor() {
+  return (
+    '#' +
+    Math.floor(Math.random() * 0xffffff)
+      .toString(16)
+      .padStart(6, '0')
+  );
+}
 export function fixChartData(data: any[]) {
   if (data.length === 0) return [];
 
@@ -61,6 +68,7 @@ export function Chart({ data }: { data: any }) {
     seriesBar: [],
     optionsBar: {},
   });
+  const [news, setNews] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const getChartData = async () => {
@@ -73,6 +81,7 @@ export function Chart({ data }: { data: any }) {
     const res = await axios.get(
       `http://localhost:3001/api/sase-api/chart?${sp.toString()}`
     );
+    // const newsRes = await axios.get(`http://localhost:3001/api/news`);
     const chartData = res.data[0];
 
     const fixedCandleData = fixChartData(
@@ -94,9 +103,13 @@ export function Chart({ data }: { data: any }) {
         },
       ],
       options: {
+        // grid: {
+        //   show: true,
+        //   padding: { left: 0, right: 0, top: 100, bottom: 0 },
+        // },
         chart: {
           type: 'candlestick',
-          height: 290,
+          height: 400,
           id: 'candles',
           toolbar: {
             autoSelected: 'pan',
@@ -110,6 +123,26 @@ export function Chart({ data }: { data: any }) {
         xaxis: {
           type: 'datetime',
         },
+        // annotations: {
+        //   xaxis: newsRes.data.map((article: any, index: number) => {
+        //     const color = generateRandomHexColor();
+        //     return {
+        //       x: new Date(article.date).getTime(),
+        //       borderColor: color,
+        //       label: {
+        //         borderColor: color,
+        //         style: {
+        //           fontSize: '12px',
+        //           color: '#fff',
+        //           background: color,
+        //         },
+        //         orientation: 'horizontal',
+        //         offsetY: -1 * (0 + (index % 3) * 20),
+        //         text: article.text,
+        //       },
+        //     };
+        //   }),
+        // },
       },
       seriesBar: [
         {
@@ -117,6 +150,7 @@ export function Chart({ data }: { data: any }) {
           data: volumeData,
         },
       ],
+
       optionsBar: {
         chart: {
           height: 160,
@@ -191,6 +225,8 @@ export function Chart({ data }: { data: any }) {
   useEffect(() => {
     getChartData();
   }, []);
+
+  console.log(state, 'state');
 
   if (isLoading) {
     return <div>Loading...</div>;

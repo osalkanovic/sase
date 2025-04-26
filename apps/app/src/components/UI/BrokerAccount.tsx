@@ -135,7 +135,7 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
                       <div className="flex flex-col items-center w-1/3 gap-1">
                         <p className="text-xs text-gray-400">Vrijednost</p>
                         <p className="text-gray-600 text-base">
-                          {stockData.value}
+                          {formatCurrency(stockData.value)}
                         </p>
                       </div>
                     </div>

@@ -8,13 +8,16 @@ import { SaseApiService } from '../sase-api/sase-api.service';
 import { StockService } from '../stocks/stocks.service';
 import { callAssistantFactory } from '../agent/tools/call-assistant';
 import { AppConfigService } from '../config/config.service';
+import { getStockNews } from '../agent/tools/get-news';
+import { NewsService } from '../news/news.service';
 
 @Injectable()
 export class LangchainToolProvider {
   constructor(
     private readonly saseApiService: SaseApiService,
     private readonly stockService: StockService,
-    private readonly appConfigService: AppConfigService
+    private readonly appConfigService: AppConfigService,
+    private readonly newsService: NewsService
   ) {}
 
   getStockPricesTool() {
@@ -40,12 +43,17 @@ export class LangchainToolProvider {
   getCallAssistant() {
     return callAssistantFactory(this.appConfigService, this.getStockTools());
   }
+
+  getNews() {
+    return getStockNews(this.newsService);
+  }
   getUserTools() {
     return [
       this.getBuyStockTool(),
       this.getSellStockTool(),
       this.getUserBalance(),
       this.getCallAssistant(),
+      this.getNews(),
     ];
   }
   getStockTools() {
