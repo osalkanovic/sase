@@ -65,6 +65,7 @@ const AIMessage = ({
                 className="text-lg font-bold my-4 text-[#5661F6]"
               />
             ),
+            a: ({ node, ...props }) => <a {...props} className="underline" />,
             ul: ({ node, ...props }) => (
               <ul {...props} className="list-disc pl-5 my-4 space-y-4" />
             ),

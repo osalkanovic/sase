@@ -93,8 +93,8 @@ export class StockService {
           [stock]: {
             ...stockData,
             amount: userAmount,
-            value: `${value} KM`,
-            currentPrice: `${currentPrice} KM`,
+            value: value,
+            currentPrice: currentPrice,
           },
         };
       }

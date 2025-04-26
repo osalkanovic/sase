@@ -9,6 +9,7 @@ import { ChatModule } from './agent/chat/chat.module';
 import { LangchainModule } from './langchain/langchain.module';
 import { StocksModule } from './stocks/stocks.module';
 import { ResendModule } from './resend/resend.module';
+import { NewsModule } from './news/news.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,6 +22,7 @@ import { ResendModule } from './resend/resend.module';
     LangchainModule,
     StocksModule,
     ResendModule,
+    NewsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
