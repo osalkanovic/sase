@@ -1,6 +1,7 @@
 'use client';
 import axios from 'axios';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
@@ -47,21 +48,31 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
 
         <div className="w-[90%] mx-auto h-[1px] mt-4 mb-4 bg-gray-200"></div>
         <div className="flex items-center justify-center gap-4">
-          <div className="flex items-center justify-center gap-2 group cursor-pointer">
+          <Link
+            href="/historija"
+            target="_blank"
+            className="flex items-center justify-center gap-2 group cursor-pointer"
+          >
             <p className="text-gray-500 text-sm group-hover:text-blue-500">
-              Dodaj novac
+              Historija
             </p>
-            <span className="material-icons-round text-gray-500 group-hover:text-blue-500">
-              credit_score
+            <span
+              className="material-icons-round text-gray-500 group-hover:text-blue-500"
+              style={{ fontSize: 20 }}
+            >
+              history
             </span>
-          </div>
+          </Link>
 
           <div className="w-[2px] h-[20px] bg-gray-200" />
           <div className="flex items-center justify-center gap-2 group cursor-pointer">
             <p className="text-gray-500 text-sm group-hover:text-blue-500">
               Isplata
             </p>
-            <span className="material-icons-round text-gray-500 group-hover:text-blue-500">
+            <span
+              style={{ fontSize: 20 }}
+              className="material-icons-round text-gray-500 group-hover:text-blue-500"
+            >
               request_page
             </span>
           </div>
@@ -74,7 +85,10 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
             <p className="text-gray-500 text-sm group-hover:text-blue-500">
               Osjveži
             </p>
-            <span className="material-icons-round text-gray-500 group-hover:text-blue-500 group-active:rotate-[420deg] transition-all duration-500">
+            <span
+              style={{ fontSize: 20 }}
+              className="material-icons-round text-gray-500 group-hover:text-blue-500 group-active:rotate-[420deg] transition-all duration-500"
+            >
               refresh
             </span>
           </div>

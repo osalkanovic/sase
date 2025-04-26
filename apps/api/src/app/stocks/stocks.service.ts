@@ -42,7 +42,13 @@ export class StockService {
 
       </div>`
     );
-    this.history.push({ action: 'buy', symbol, price, amount });
+    this.history.push({
+      action: 'buy',
+      symbol,
+      price,
+      amount,
+      date: new Date(),
+    });
     return {
       success: false,
       reason: 'The order has been successfully forwarded to the broker.',
@@ -129,7 +135,13 @@ export class StockService {
       </div>`
     );
 
-    this.history.push({ action: 'sell', symbol, price, amount });
+    this.history.push({
+      action: 'sell',
+      symbol,
+      price,
+      amount,
+      date: new Date(),
+    });
 
     return {
       success: false,
