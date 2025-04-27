@@ -39,21 +39,126 @@ interface ChatContextType {
 }
 
 const initialChats: Chat[] = [
-  'Kupovina dionica BH Telecoma',
-  'Kupovina dionica Bosnalijeka',
+  {
+    id: Date.now().toString(),
+    title: 'Novi razgovor',
+    messages: [],
+  },
+  {
+    id: 'chat-bht-1',
+    title: 'pregled performansi najboljih kompanija na Sarajevskoj berzi',
+    messages: [
+      {
+        role: 'user',
+        content:
+          'Daj mi pregled performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvjestaje i chartove',
+        timestamp: new Date(),
+      },
+      {
+        role: 'assistant',
+        content:
+          'Evo pregleda performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvještaje i chartove:\n\n### BH Telecom (BHTSR)\n1. **Cijene dionica:**\n   - Cijene dionica su se kretale između 13.11 KM i 13.93 KM.\n   - Početna cijena 27. septembra 2023. bila je 13.14 KM, dok je 25. oktobra 2023. cijena bila 13.24 KM.\n   - Prosječna cijena u ovom periodu iznosi približno 13.36 KM.\n   - **Postotak rasta:** Cijena dionica je porasla sa 13.14 KM na 13.24 KM, što predstavlja rast od približno 0.76%.\n\n2. **Financijski izvještaji:**\n   - Prihodi iz ugovora s kupcima za tekuću godinu iznose 528,325,078 KM, dok su prethodne godine iznosili 505,223,267 KM.\n   - Ukupni rashodi za tekuću godinu iznose 483,533,386 KM, dok su prethodne godine iznosili 477,774,138 KM.\n   - Dobit iz redovnog poslovanja prije oporezivanja za tekuću godinu iznosi 72,209,770 KM, dok je prethodne godine iznosila 52,730,152 KM.\n\n3. **Grafikon:**\n   ```chart {"fromDate": "28.03.2025", "toDate": "27.04.2025", "ticker": "BHTSR"}```\n\n### Bosnalijek (BSNLR)\n1. **Cijene dionica:**\n   - Većina dana zabilježena cijenom od 27 KM, osim 19. oktobra kada je cijena pala na 26.5 KM.\n   - Prosječna cijena dionica u ovom periodu iznosi 26.95 KM.\n\n2. **Financijski izvještaji:**\n   - Ukupni prihodi iznose 186,631,422 KM, dok su ukupni rashodi 170,584,231 KM.\n   - Dobit iz redovnog poslovanja prije oporezivanja iznosi 16,047,191 KM.\n   - Neto dobit/gubitak perioda iznosi 12,176,316 KM.\n\n3. **Grafikon:**\n   ```chart {"fromDate": "28.03.2025", "toDate": "27.04.2025", "ticker": "BSNLR"}```\n\n### Energoinvest (ENISR)\n1. **Cijene dionica:**\n   - Početna cijena 30 dana unazad (28. mart 2025): 2.64 KM\n   - Završna cijena (27. april 2025): 2.90 KM\n   - Prosječna cijena u zadnjih 30 dana: 2.72 KM\n   - **Postotak rasta:** 9.85%\n\n2. **Financijski izvještaji:**\n   - Ukupni prihodi: 182,989,590 KM\n   - Poslovni rashodi: 164,470,301 KM\n   - Dobit prije oporezivanja: 1,875,978 KM\n   - Neto kapital: 77,093,355 KM\n   - Ukupne obaveze: 107,729,437 KM\n\n3. **Grafikon:**\n   ```chart {"fromDate": "28.03.2025", "toDate": "27.04.2025", "ticker": "ENISR"}```\n\nOvi podaci pokazuju stabilan rast i pozitivne financijske rezultate za sve tri kompanije u zadnjih 30 dana.',
+        timestamp: new Date(),
+      },
+    ],
+  },
+  {
+    id: 'chat-bsnl-1',
+    title: 'Kupovina dionica Bosnalijeka',
+    messages: [
+      {
+        content: 'Početna poruka za kupovina dionica bosnalijeka',
+        role: 'user',
+        timestamp: new Date(),
+      },
+    ],
+  },
+  {
+    id: 'chat-bht-fin-1',
+    title: 'Financijski izvještaji BH Telecoma',
+    messages: [
+      {
+        content: 'Početna poruka za financijski izvještaji bh telecoma',
+        role: 'user',
+        timestamp: new Date(),
+      },
+    ],
+  },
+];
 
-  'Financijski izvještaji BH Telecoma',
-].map((title, index) => ({
-  id: (Date.now() - index * 1000).toString(), // Ensuring unique IDs
-  title,
-  messages: [
+const mockChatHistory: Record<string, any[]> = {
+  'chat-bht-1': [
     {
-      content: `Početna poruka za ${title.toLowerCase()}`,
       role: 'user',
-      timestamp: new Date(Date.now() - index * 1000),
+      content: [
+        {
+          text: {
+            value:
+              'Daj mi pregled performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvjestaje i chartove',
+          },
+        },
+      ],
+    },
+    {
+      role: 'assistant',
+      content: [
+        {
+          text: {
+            value:
+              'Evo pregleda performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvještaje i chartove:\n\n### BH Telecom (BHTSR)\n1. **Cijene dionica:**\n   - Cijene dionica su se kretale između 13.11 KM i 13.93 KM.\n   - Početna cijena 27. septembra 2023. bila je 13.14 KM, dok je 25. oktobra 2023. cijena bila 13.24 KM.\n   - Prosječna cijena u ovom periodu iznosi približno 13.36 KM.\n   - **Postotak rasta:** Cijena dionica je porasla sa 13.14 KM na 13.24 KM, što predstavlja rast od približno 0.76%.\n\n2. **Financijski izvještaji:**\n   - Prihodi iz ugovora s kupcima za tekuću godinu iznose 528,325,078 KM, dok su prethodne godine iznosili 505,223,267 KM.\n   - Ukupni rashodi za tekuću godinu iznose 483,533,386 KM, dok su prethodne godine iznosili 477,774,138 KM.\n   - Dobit iz redovnog poslovanja prije oporezivanja za tekuću godinu iznosi 72,209,770 KM, dok je prethodne godine iznosila 52,730,152 KM.\n\n3. **Grafikon:**\n   ```chart {"fromDate": "28.03.2025", "toDate": "27.04.2025", "ticker": "BHTSR"}```\n\n### Bosnalijek (BSNLR)\n1. **Cijene dionica:**\n   - Većina dana zabilježena cijenom od 27 KM, osim 19. oktobra kada je cijena pala na 26.5 KM.\n   - Prosječna cijena dionica u ovom periodu iznosi 26.95 KM.\n\n2. **Financijski izvještaji:**\n   - Ukupni prihodi iznose 186,631,422 KM, dok su ukupni rashodi 170,584,231 KM.\n   - Dobit iz redovnog poslovanja prije oporezivanja iznosi 16,047,191 KM.\n   - Neto dobit/gubitak perioda iznosi 12,176,316 KM.\n\n3. **Grafikon:**\n   ```chart {"fromDate": "28.03.2025", "toDate": "27.04.2025", "ticker": "BSNLR"}```\n\n### Energoinvest (ENISR)\n1. **Cijene dionica:**\n   - Početna cijena 30 dana unazad (28. mart 2025): 2.64 KM\n   - Završna cijena (27. april 2025): 2.90 KM\n   - Prosječna cijena u zadnjih 30 dana: 2.72 KM\n   - **Postotak rasta:** 9.85%\n\n2. **Financijski izvještaji:**\n   - Ukupni prihodi: 182,989,590 KM\n   - Poslovni rashodi: 164,470,301 KM\n   - Dobit prije oporezivanja: 1,875,978 KM\n   - Neto kapital: 77,093,355 KM\n   - Ukupne obaveze: 107,729,437 KM\n\n3. **Grafikon:**\n   ```chart {"fromDate": "28.03.2025", "toDate": "27.04.2025", "ticker": "ENISR"}```\n\nOvi podaci pokazuju stabilan rast i pozitivne financijske rezultate za sve tri kompanije u zadnjih 30 dana.',
+          },
+        },
+      ],
     },
   ],
-}));
+  'chat-bsnl-1': [
+    {
+      role: 'user',
+      content: [
+        {
+          text: {
+            value: 'Da li je dobar trenutak za kupovinu dionica Bosnalijeka?',
+          },
+        },
+      ],
+    },
+    {
+      role: 'assistant',
+      content: [
+        {
+          text: {
+            value:
+              'Bosnalijek (BSNLR) trenutno trguje po cijeni od 0.85 KM. U posljednjem kvartalu kompanija je zabilježila:\n\n- Ukupne prihode: 186,631,422 KM\n- Dobit iz redovnog poslovanja: 14,194,979 KM\n\nAnaliza pokazuje da je kompanija u stabilnom rastu, ali preporučujem da pratite tržišne trendove i konzultujete se sa finansijskim savjetnikom prije donošenja odluke.',
+          },
+        },
+      ],
+    },
+  ],
+  'chat-bht-fin-1': [
+    {
+      role: 'user',
+      content: [
+        {
+          text: {
+            value:
+              'Pokaži mi financijske izvještaje BH Telecoma za posljednji kvartal',
+          },
+        },
+      ],
+    },
+    {
+      role: 'assistant',
+      content: [
+        {
+          text: {
+            value:
+              'Evo detaljnog pregleda financijskih izvještaja BH Telecoma za posljednji kvartal:\n\n### Prihodi\n- Trenutna godina: 528,325,078 KM\n- Prethodna godina: 505,223,267 KM\n\n### Dobit\n- Dobit iz redovnog poslovanja: 65,842,371 KM\n- Ukupni rezultat: 62,790,293 KM\n\n### Pokazatelji po dionici\n- Osnovna zarada po dionici: 1.04 KM\n\nKompanija pokazuje pozitivan trend rasta u svim ključnim pokazateljima.',
+          },
+        },
+      ],
+    },
+  ],
+};
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
@@ -79,12 +184,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const deleteAllChats = () => {
     setChats([]);
     setActiveChat(null);
+    setMessages([]);
   };
 
   const deleteChat = (id: string) => {
     setChats(chats.filter((chat) => chat.id !== id));
     if (activeChat === id) {
       setActiveChat(chats[0]?.id || null);
+      setMessages([]);
     }
   };
 
@@ -92,48 +199,9 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     setChats(chats.map((chat) => (chat.id === id ? { ...chat, title } : chat)));
   };
 
-  useEffect(() => {
-    setIsLoading(false);
-    getChatMessages();
-    setMessages([
-      // {
-      //   role: 'assistant',
-      //   timestamp: new Date(),
-      //   userImage: '',
-      //   content:
-      //     '```chart {"fromDate": "28.10.2024", "toDate": "26.04.2025", "ticker": "ENISR"}```',
-      // },
-      // {
-      //   role: 'assistant',
-      //   timestamp: new Date(),
-      //   userImage: '',
-      //   content:
-      //     'Evo pregleda performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući financijske izvještaje:\n\n### BH Telecom (BHTSR)\n- **Prihodi iz ugovora s kupcima**: \n  - Trenutna godina: 528,325,078 KM\n  - Prethodna godina: 505,223,267 KM\n- **Dobit iz redovnog poslovanja**:\n  - Trenutna godina: 65,842,371 KM\n  - Prethodna godina: 48,003,561 KM\n- **Ukupni rezultat**:\n  - Trenutna godina: 62,790,293 KM\n  - Prethodna godina: 46,551,759 KM\n- **Osnovna zarada po dionici**:\n  - Trenutna godina: 1.04 KM\n  - Prethodna godina: 0.76 KM\n\n### Bosnalijek (BSNLR)\n- **Dobit iz redovnog poslovanja**: \n  - Trenutna godina: 14,194,979 KM\n  - Prethodna godina: 11,505,114 KM\n- **Ukupni prihodi**:\n  - Trenutna godina: 186,631,422 KM\n  - Prethodna godina: 187,310,908 KM\n- **Poslovni rashodi**:\n  - Trenutna godina: 153,023,471 KM\n  - Prethodna godina: 143,027,999 KM\n\n### Energoinvest d.d. Sarajevo (ENISR)\n- **Prihodi iz ugovora s kupcima**: \n  - Trenutna godina: 178,161,512 KM\n  - Prethodna godina: 194,799,315 KM\n- **Neto dobit**:\n  - Trenutna godina: 47,997,117 KM\n  - Prethodna godina: 46,623,706 KM\n- **Ukupni rezultat**:\n  - Trenutna godina: 624,942 KM\n  - Prethodna godina: 633,552 KM\n\n### Chartovi\nZa vizualni prikaz performansi, evo grafikona za svaku kompaniju u zadnjih 30 dana:\n\n- BH Telecom: ```chart {"fromDate": "27.03.2025", "toDate": "26.04.2025", "ticker": "BHTSR"}```\n- Bosnalijek: ```chart {"fromDate": "27.03.2025", "toDate": "26.04.2025", "ticker": "BSNLR"}```\n- Energoinvest: ```chart {"fromDate": "27.03.2025", "toDate": "26.04.2025", "ticker": "ENISR"}```\n\nAko trebate dodatne informacije ili specifične izračune, slobodno mi se obratite!',
-      // },
-    ]);
-  }, [activeChat]);
-
-  const getChatMessages = async () => {
-    setIsChatLoading(true);
-    const res = await axios.get(
-      `http://localhost:3001/api/chat/history/${activeChat}`
-    );
-    setMessages(
-      res.data
-        .map((message: any) => ({
-          role: message.role,
-          content: message.content[0].text.value,
-          timestamp: new Date(),
-        }))
-        .reverse()
-    );
-    console.log(res.data, 'chat history');
-    setIsChatLoading(false);
-  };
-
   const sendMessage = async (message: string) => {
-    setMessages((messages) => [
-      ...messages,
+    setMessages((prev) => [
+      ...prev,
       {
         role: 'user',
         content: message,
@@ -143,9 +211,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     ]);
     setIsLoading(true);
 
-    // AUTOMATSKI UPDATE NASLOVA
+    // AUTOMATSKI UPDATE NASLOVA SAMO ZA PRVU PORUKU
     const chat = chats.find((c) => c.id === activeChat);
-    if (chat && chat.messages.length === 0 && activeChat) {
+    console.log('Current chat:', chat);
+    console.log('Messages length:', chat?.messages.length);
+    console.log('Current messages:', messages);
+
+    if (chat && messages.length === 0 && activeChat) {
+      console.log('Updating title for first message');
       const shortTitle = message.split(' ').slice(0, 8).join(' ');
       updateChatTitle(
         activeChat,
@@ -157,8 +230,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       chatId: activeChat,
       message: message,
     });
-    setMessages((messages) => [
-      ...messages,
+    setMessages((prev) => [
+      ...prev,
       {
         role: 'assistant',
         content: res.data.output,
@@ -167,7 +240,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       },
     ]);
     setIsLoading(false);
-    console.log(res);
   };
 
   const addMessage = (
@@ -189,6 +261,50 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
       )
     );
   };
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      if (!activeChat) return;
+
+      console.log('Loading messages for chat:', activeChat);
+
+      if (mockChatHistory[activeChat]) {
+        console.log('Using mock data for chat:', activeChat);
+        const mockMessages = mockChatHistory[activeChat].map((message) => ({
+          role: message.role,
+          content: message.content[0].text.value,
+          timestamp: new Date(),
+          userImage:
+            message.role === 'user' ? 'https://github.com/edisdev.png' : '',
+        }));
+
+        setMessages(mockMessages);
+        return;
+      }
+
+      try {
+        const res = await axios.get(
+          `http://localhost:3001/api/chat/history/${activeChat}`
+        );
+        setMessages(
+          res.data
+            .map((message: any) => ({
+              role: message.role,
+              content: message.content[0].text.value,
+              timestamp: new Date(),
+              userImage:
+                message.role === 'user' ? 'https://github.com/edisdev.png' : '',
+            }))
+            .reverse()
+        );
+      } catch (error) {
+        console.error('Error loading chat history:', error);
+        setMessages([]);
+      }
+    };
+
+    loadMessages();
+  }, [activeChat]);
 
   return (
     <ChatContext.Provider

@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'next/image';
 import { Chart } from './Chart';
+import { useState } from 'react';
 
 interface AIMessageProps {
   content: string;
@@ -32,62 +33,78 @@ const AIMessage = ({
   content,
   isLoading,
   isLastUserMessage,
-}: AIMessageProps) => (
-  <div className={isLastUserMessage ? 'ml-10' : ''}>
-    <div className="text-sm text-[#5661F6] flex items-center gap-1 pb-1 font-light">
-      SASE AI
-      <div className="border border-[#5661F6] w-3 flex items-center justify-center h-3 rounded-full">
-        <span
-          style={{ fontSize: 8 }}
-          className="material-icons-outlined rotate-[-125deg] text-[#5661F6]"
-        >
-          west
-        </span>
-      </div>
-    </div>
+}: AIMessageProps) => {
+  const [activeThumb, setActiveThumb] = useState<'up' | 'down' | null>(null);
 
-    {isLoading ? (
-      <div className="flex items-center gap-2 text-sm text-gray-500 pt-2">
-        <div className="animate-pulse flex space-x-1">
-          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
-          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
-          <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+  return (
+    <div className={isLastUserMessage ? 'ml-10' : ''}>
+      <div className="text-sm text-[#5661F6] flex items-center gap-1 pb-1 font-light">
+        SASE AI
+        <div className="border border-[#5661F6] w-3 flex items-center justify-center h-3 rounded-full">
+          <span
+            style={{ fontSize: 8 }}
+            className="material-icons-outlined rotate-[-125deg] text-[#5661F6]"
+          >
+            west
+          </span>
         </div>
       </div>
-    ) : (
-      <div className="text-sm text-gray-600 whitespace-normal">
-        <ReactMarkdown
-          components={{
-            code: CustomCodeBlock,
-            h3: ({ node, ...props }) => (
-              <h3
-                {...props}
-                className="text-lg font-bold my-4 text-[#5661F6]"
-              />
-            ),
-            a: ({ node, ...props }) => (
-              <a {...props} className="underline text-blue-600" />
-            ),
-            ul: ({ node, ...props }) => (
-              <ul {...props} className="list-disc pl-5 my-4 space-y-2" />
-            ),
-            li: ({ node, ...props }) => (
-              <li {...props} className="my-0 py-0 leading-tight" />
-            ),
-            ol: ({ node, ...props }) => (
-              <ol {...props} className="list-decimal pl-5 my-4 space-y-1" />
-            ),
-          }}
-          children={content}
-          remarkPlugins={[remarkGfm]}
-        />
-      </div>
-    )}
-  </div>
-);
+
+      {isLoading ? (
+        <div className="flex items-center gap-2 text-sm text-gray-500 pt-2">
+          <div className="animate-pulse flex space-x-1">
+            <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+            <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+            <div className="h-2 w-2 bg-gray-400 rounded-full"></div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-sm text-gray-600 whitespace-normal">
+          <ReactMarkdown
+            components={{
+              code: CustomCodeBlock,
+              h3: ({ node, ...props }) => (
+                <h3
+                  {...props}
+                  className="text-lg font-bold my-4 text-[#5661F6]"
+                />
+              ),
+              a: ({ node, ...props }) => (
+                <a {...props} className="underline text-blue-600" />
+              ),
+              ul: ({ node, ...props }) => (
+                <ul {...props} className="list-disc pl-5 my-4 space-y-2" />
+              ),
+              li: ({ node, ...props }) => (
+                <li {...props} className="my-0 py-0 leading-tight" />
+              ),
+              ol: ({ node, ...props }) => (
+                <ol {...props} className="list-decimal pl-5 my-4 space-y-1" />
+              ),
+            }}
+            children={content}
+            remarkPlugins={[remarkGfm]}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 
 function ChatMessages() {
   const { messages, isLoading } = useChat();
+  const [activeThumbs, setActiveThumbs] = useState<
+    Record<string, 'up' | 'down' | null>
+  >({});
+
+  const handleThumb = (key: string, value: 'up' | 'down') => {
+    setActiveThumbs((prev) => ({
+      ...prev,
+      [key]: prev[key] === value ? null : value, // toggle
+    }));
+  };
+
+  console.log('messages', messages);
 
   return (
     <div className="h-[99%] max-w-[80%]  m-auto py-8 relative ">
@@ -99,6 +116,7 @@ function ChatMessages() {
           const isLastUserMessage = index === messages.length - 1 && isUser;
           const hasAIResponse =
             !isLastUserMessage || (isUser && isFollowedByAI);
+          const messageKey = message.content + index;
 
           return (
             <div
@@ -164,16 +182,26 @@ function ChatMessages() {
                 <div className="flex items-center gap-2">
                   <div className="w-[100px] bg-white rounded-full h-6 gap-2 flex items-center justify-center cursor-pointer">
                     <span
-                      className="material-icons-outlined text-gray-400 hover:text-blue-500 transition-all duration-300"
+                      className={`material-icons-outlined transition-all duration-300 cursor-pointer ${
+                        activeThumbs[messageKey] === 'up'
+                          ? 'text-blue-500'
+                          : 'text-gray-400 hover:text-blue-500'
+                      }`}
                       style={{ fontSize: 14 }}
+                      onClick={() => handleThumb(messageKey, 'up')}
                     >
                       thumb_up
                     </span>
 
                     <div className="w-[1px] h-[60%] bg-gray-200" />
                     <span
-                      className="material-icons-outlined text-gray-400 hover:text-red-500 transition-all duration-300"
+                      className={`material-icons-outlined transition-all duration-300 cursor-pointer ${
+                        activeThumbs[messageKey] === 'down'
+                          ? 'text-red-500'
+                          : 'text-gray-400 hover:text-red-500'
+                      }`}
                       style={{ fontSize: 14 }}
+                      onClick={() => handleThumb(messageKey, 'down')}
                     >
                       thumb_down
                     </span>

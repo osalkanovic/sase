@@ -83,7 +83,7 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
             className="flex items-center justify-center gap-2 group cursor-pointer"
           >
             <p className="text-gray-500 text-sm group-hover:text-blue-500">
-              Osjveži
+              Osvježi
             </p>
             <span
               style={{ fontSize: 20 }}
@@ -99,7 +99,7 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
             Lista dionica
           </p>
           <div className="flex flex-col w-full gap-2 mt-4 max-w-[90%] overflow-auto">
-            {Object.keys(data.stocks).map((stock, idx) => {
+            {Object.keys(data.stocks).map((stock) => {
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               //@ts-ignore
               const stockData = data.stocks[stock];
@@ -148,7 +148,7 @@ function BrokerAccount({ isDrawerOpen }: { isDrawerOpen: boolean }) {
 
             {Object.keys(data.stocks).length === 0 && (
               <p className="text-gray-500 text-sm text-center py-4">
-                Nemate dionice u portfelju
+                Nemate dionice u portfoliu
               </p>
             )}
           </div>

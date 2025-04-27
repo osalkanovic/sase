@@ -82,7 +82,7 @@ function ChatInput() {
             <div className="w-full h-full flex justify-between">
               <div className="flex items-center gap-2">
                 <div
-                  className={`max-h-[80%] px-2 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
+                  className={`max-h-[80%] pr-3 px-2 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
                   onClick={() =>
                     sendMessage(
                       'Prikaži trenutno stanje mog portfelja: ukupna vrijednost, stanje po dionicama i promjene u zadnjih 30 dana sa grafikonom.'
@@ -97,11 +97,11 @@ function ChatInput() {
                       paid
                     </span>
                   </div>
-                  <p className="text-xs text-gray-500">Koliko para imam?</p>
+                  <p className="text-xs text-gray-500">Balans novca</p>
                 </div>
 
                 <div
-                  className={`max-h-[80%] px-2 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
+                  className={`max-h-[80%] px-2 pr-3 transition-all hover:opacity-80 active:opacity-75 flex items-center gap-1 duration-300 h-[38.4px] group border border-gray-200 rounded-full flex items-center cursor-pointer justify-center`}
                   onClick={() =>
                     sendMessage(
                       'Daj mi pregled performansi najboljih kompanija na Sarajevskoj berzi u zadnjih 30 dana, uključujući postotak rasta ili pada, financijske izvjestaje i chartove'

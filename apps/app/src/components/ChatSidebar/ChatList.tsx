@@ -35,7 +35,7 @@ export function ChatList() {
                     : 'group-hover:text-[#5661F6]'
                 }`}
               >
-                {chat.title}
+                {chat.title.charAt(0).toUpperCase() + chat.title.slice(1)}
               </p>
             </div>
           );
