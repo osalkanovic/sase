@@ -1,104 +1,270 @@
-# Sase
+# SASE Stock Trading Platform Documentation
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+## Table of Contents
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+- [Project Overview](#project-overview)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Setup and Installation](#setup-and-installation)
+- [Development Guide](#development-guide)
+- [API Documentation](#api-documentation)
+- [Frontend Guide](#frontend-guide)
+- [Deployment](#deployment)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/nest?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+## Project Overview
 
-## Run tasks
+The SASE Stock Trading Platform is a comprehensive solution for trading stocks on the Sarajevo Stock Exchange. It provides real-time market data, trading capabilities, and AI-powered market analysis.
 
-To run the dev server for your app, use:
+### Key Features
 
-```sh
-npx nx serve api
+- Real-time stock trading
+- Portfolio management
+- Market data visualization
+- AI-powered market analysis
+- Email notifications
+- Trading history tracking
+
+## Tech Stack
+
+### Frontend
+
+- **Framework**: Next.js 15.2.4
+- **UI Library**: React 18.3.1
+- **Styling**: TailwindCSS
+- **Charts**: React ApexCharts
+- **Animations**: Framer Motion
+
+### Backend
+
+- **Framework**: NestJS
+- **Language**: TypeScript
+- **Build System**: Nx
+- **AI Integration**: LangChain
+- **Email Service**: Resend
+
+## Architecture
+
+### Backend Structure
+
+```
+apps/api/src/
+├── app/
+│   ├── news/           # News module
+│   ├── stocks/         # Stock trading module
+│   ├── sase-api/       # SASE API integration
+│   ├── resend/         # Email notifications
+│   ├── agent/          # AI integration
+│   └── config/         # Configuration
 ```
 
-To create a production bundle:
+### Frontend Structure
 
-```sh
-npx nx build api
+```
+apps/app/src/
+├── app/
+│   ├── page.tsx        # Main dashboard
+│   ├── historija/      # Trading history
+│   ├── chat/          # AI chat interface
+│   └── components/     # Reusable components
 ```
 
-To see all available targets to run for a project, run:
+## Setup and Installation
 
-```sh
-npx nx show project api
+### Prerequisites
+
+- Node.js (LTS version)
+- NPM or Yarn
+- Nx CLI
+
+### Installation Steps
+
+1. Clone the repository:
+
+   ```bash
+   git clone git@github.com:osalkanovic/sase.git
+   cd sase
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run setup agents script:
+   ```bash
+   npx ts-node -r tsconfig-paths/register --compiler-options '{"module":"CommonJS"}' apps/api/src/setup.ts
+   ```
+
+## Development Guide
+
+### Running the Application
+
+#### Development Mode
+
+1. Start the backend:
+
+   ```bash
+   npm run api:dev
+   ```
+
+2. Start the frontend:
+   ```bash
+   npm run app:dev
+   ```
+
+#### Production Build
+
+```bash
+npm run build:app
+npm run start:app
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+## API Documentation
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### News Module
 
-## Add new projects
+- **GET /news**
+  - Returns list of market news
+  - Response format:
+    ```typescript
+    interface News {
+      text: string;
+      date: string;
+      link: string;
+    }
+    ```
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+### Stocks Module
 
-Use the plugin's generator to create new projects.
+- **POST /stocks/buy**
 
-To generate a new application, use:
+  - Parameters:
+    ```typescript
+    {
+      symbol: string;
+      price: number;
+      amount: number;
+    }
+    ```
+  - Response:
+    ```typescript
+    {
+      success: boolean;
+      reason: string;
+    }
+    ```
 
-```sh
-npx nx g @nx/nest:app demo
-```
+- **POST /stocks/sell**
 
-To generate a new library, use:
+  - Parameters: Same as buy
+  - Response: Same as buy
 
-```sh
-npx nx g @nx/node:lib mylib
-```
+- **GET /stocks/balance**
+  - Returns user's portfolio and balance
+  - Response format:
+    ```typescript
+    {
+      userBalance: string;
+      stocks: {
+        [symbol: string]: {
+          name: string;
+          amount: number;
+          value: string;
+          currentPrice: string;
+        }
+      }
+    }
+    ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+### SASE API Integration
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+The backend integrates with the Sarajevo Stock Exchange API:
 
-## Set up CI!
+- Base URL: `https://www.sase.ba/FeedServices`
+- Endpoint: `/HandlerChart.ashx`
+- Data Format: XML (converted to JSON)
 
-### Step 1
+Available operations:
 
-To connect to Nx Cloud, run the following command:
+- Get stock price
+- Get historical data
+- Get stock indicators
+- Get company reports
 
-```sh
-npx nx connect
-```
+## Frontend Guide
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+### Main Components
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+1. **Dashboard**
 
-### Step 2
+   - Stock price charts
+   - Portfolio overview
+   - Market news
 
-Use the following command to configure a CI workflow for your workspace:
+2. **Trading Interface**
 
-```sh
-npx nx g ci-workflow
-```
+   - Buy/Sell forms
+   - Order history
+   - Portfolio management
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+3. **AI Chat**
+   - Market analysis
+   - Trading recommendations
+   - News interpretation
 
-## Install Nx Console
+### Styling
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+- Uses TailwindCSS for styling
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Deployment
 
-## Useful links
+### Production Build
 
-Learn more:
+1. Build the application:
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/nest?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+   ```bash
+   npm run build:app
+   ```
 
-And join the Nx community:
+2. Start the production server:
+   ```bash
+   npm run start:app
+   ```
 
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Environment Variables
 
-Setup assistants: npx ts-node -r tsconfig-paths/register --compiler-options '{"module":"CommonJS"}' apps/api/src/setup.ts
+Required environment variables:
+
+- `RESEND_API_KEY` - For email notifications
+- `OPENAI_API_KEY` - For AI features
+
+## Security Considerations
+
+### API Security
+
+- All API endpoints are protected
+- Rate limiting implemented
+- Input validation
+- Error handling
+
+### Data Protection
+
+- Secure API key management
+- HTTPS communication
+- Data encryption
+
+## Contributing
+
+### Development Workflow
+
+1. Create feature branch
+2. Implement changes
+3. Run tests
+4. Create pull request
+
+### Code Style
+
+- Follow TypeScript best practices
+- Use ESLint for linting
+- Follow project's coding conventions
